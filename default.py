@@ -219,6 +219,11 @@ class LibMngClass(xbmcgui.Window):
         option_idx = dialog.select( 'Choose location', paths )
         if option_idx < 0:
             return 
+	# Check path availability  
+	if not os.path.exists( paths[option_idx] ):
+	  dialog.ok( "Source not available", "Select an available source", 
+	      "Tip: make sure that source is mounted." )
+	  return
         # Save option 
         widget.path = paths[option_idx]
         # Set source lable properly 
