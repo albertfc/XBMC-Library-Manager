@@ -1,0 +1,5 @@
+Library Manager is a free software visual tool for managing XBMC own media
+library. Currently it has the following features:
+* Move movie files across diferent paths preserving database integrity as well
+  the related thumbnails images.
+

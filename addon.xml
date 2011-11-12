@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon 
+  id="script.LibraryManager"
+  name="Library Manager" 
+  version="0.1" 
+  provider-name="Albert Farres">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.gui"	version="2.11"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">GUI manager for XBMC library</summary>
+    <description lang="en"> 
+      Library Manager is a free software visual tool for managing XBMC own media library. Currently it has the following features:
+      * Move movie files across diferent paths preserving database integrity as well the related thumbnails images.
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
