@@ -350,14 +350,27 @@ class LibMngClass(xbmcgui.Window):
 
         ## Deal with stacked files 
         if mfile.startswith( "stack://" ):
+            logging.dbg( "Dealing with stacked files" )
             # Update db file with new values 
             query = "UPDATE files \
                      SET    strFilename=? WHERE idFile=?"  
             # Create values 
-            value = mfile.replace( old_path, new_path ), movie.meta
+            strfn = mfile.replace( old_path, new_path )
+            value = strfn, movie.meta
             # Launch query 
             c.execute( query, value )
-            #" Remove whites spaces arround fnames 
+            # Get fanart cache filename and move it
+            srcfn = ( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/Fanart/" + xbmc.getCacheThumbName( mfile ) )
+            dstfn = ( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/Fanart/" + xbmc.getCacheThumbName( strfn ) )
+            try:
+                shutil.move( srcfn, dstfn )
+                logging.dbg( "move %s %s" % ( srcfn, dstfn ) )
+            except IOError:
+                logging.dbg( "Error moving %s %s" % ( srcfn, dstfn ) )
+                pass
+            # Create file list with removed whites spaces arround names 
             mfiles = map( lambda x:x.strip(), mfile[8:].split( "," ) )
         else:
             mfiles = [old_path+mfile]
