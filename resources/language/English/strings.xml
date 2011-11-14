@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="10">Select Source</string>
+  <string id="11">Select Destination</string>
+  <string id="12">OK</string>
+  <string id="13">Cancel</string>
+  <string id="14">Options</string>
+  <string id="15">Empty List</string>
+  <string id="16">None</string>
+
+  <string id="20">Source not available</string>
+  <string id="21">Select an available source</string>
+  <string id="22">Tip: make sure that source is mounted</string>
+  <string id="23">Choose location</string>
+
+  <string id="30">Source not set</string>
+  <string id="31">Select a source location</string>
+  <string id="32">Destination not set</string>
+  <string id="33">Select a destination location</string>
+  <string id="34">Nothing to do</string>
+  <string id="35">Source and destiantion are the same path</string>
+  <string id="36">Moving movies</string>
+  <string id="37">movies(s) are going to be moved</string>
+  <string id="38">Do you want to continue?</string>
+  <string id="39">Movie not selected</string>
+  <string id="40">Select at least one movie to move</string>
+  <string id="41">Current movie:</string>
+
+  <string id="50">Only show watched</string>
+
+</strings>

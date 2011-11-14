@@ -5,13 +5,6 @@ import shutil
 import glob
 import re
 import xbmc, xbmcgui, xbmcaddon
-from resources.lib.logging import logging
-try:
-    from sqlite3 import dbapi2 as sqlite
-    logging.dbg( "Loading sqlite3 as DB engine" )
-except:
-    from pysqlite2 import dbapi2 as sqlite
-    logging.dbg("Loading pysqlite2 as DB engine" )
 
 # Script constants
 __scriptname__ = "Library Manager"
@@ -21,16 +14,27 @@ __version__    = "0.1"
 __url__        = "n/a"
 __email__      = "albertfc@gmail.com"
 __status__     = "Prototype"
-#__settings__   = xbmcaddon.Addon(id="script.librarymanager")
-#__language__   = __settings__.getLocalizedString
-#__cwd__        = __settings__.getAddonInfo('path')
+__settings__   = xbmcaddon.Addon(id="script.LibraryManager")
+__language__   = __settings__.getLocalizedString
+__cwd__        = __settings__.getAddonInfo('path')
+
+from resources.lib.logging import logging
+try:
+    from sqlite3 import dbapi2 as sqlite
+    logging.dbg( "Loading sqlite3 as DB engine" )
+except:
+    from pysqlite2 import dbapi2 as sqlite
+    logging.dbg("Loading pysqlite2 as DB engine" )
+
+#enable localization
+getLS   = sys.modules[ "__main__" ].__language__
 
 #get actioncodes from keymap.xml
 ACTION_PREVIOUS_MENU = 10
 ACTION_SELECT_ITEM = 7
 ACTION_PARENT_DIR = 9
 
-INIT_LIST_ITEM = 'Empty List'
+INIT_LIST_ITEM = getLS(15)
 
 class metaStr( str ):
 
@@ -82,10 +86,10 @@ class LibMngClass(xbmcgui.Window):
 	basey = 0
         self.src = self.widget()
         self.src.label = xbmcgui.ControlLabel( labelp.xpos, basey + labelp.ypos,
-                labelp.xsize, labelp.ysize, 'None', 'font14', '0xFFBBBBFF')
+                labelp.xsize, labelp.ysize, getLS(16), 'font14', '0xFFBBBBFF')
         self.addControl( self.src.label )
         self.src.button = xbmcgui.ControlButton( buttonp.xpos, basey +
-                buttonp.ypos, buttonp.xsize, buttonp.ysize, "Select Source" )
+                buttonp.ypos, buttonp.xsize, buttonp.ysize, getLS(10) )
         self.addControl(self.src.button)
         self.src.wlist = xbmcgui.ControlList( listp.xpos, basey + listp.ypos,
                 listp.xsize, listp.ysize, buttonFocusTexture="MenuItemFO.png",
@@ -97,12 +101,10 @@ class LibMngClass(xbmcgui.Window):
 	basey = int( 5*self.scaley )
         self.dst = self.widget()
         self.dst.label = xbmcgui.ControlLabel( labelp.xpos, basey + labelp.ypos,
-                labelp.xsize, labelp.ysize, 'None', 
-                'font14', '0xFFBBBBFF')
+                labelp.xsize, labelp.ysize, getLS(16), 'font14', '0xFFBBBBFF')
         self.addControl( self.dst.label )
         self.dst.button = xbmcgui.ControlButton( buttonp.xpos, basey +
-                buttonp.ypos, buttonp.xsize, buttonp.ysize, "Select\
- Destination" )
+                buttonp.ypos, buttonp.xsize, buttonp.ysize, getLS(11) )
         self.addControl(self.dst.button)
 	#self.dst.wlist = xbmcgui.ControlList( basex + listp.xpos, listp.ypos,
 	#        listp.xsize, listp.ysize, buttonFocusTexture="MenuItemFO.png",
@@ -117,7 +119,7 @@ class LibMngClass(xbmcgui.Window):
 	okp.xsize = int( 10*self.scalex )
 	okp.ysize = int( 10*self.scaley )
 	self.okButton = xbmcgui.ControlButton( okp.xpos, okp.ypos,
-	     okp.xsize, okp.ysize, "OK" )
+	     okp.xsize, okp.ysize, getLS(12) )
         self.addControl(self.okButton)
        	cancelp = place()
 	cancelp.xpos = int( 70*self.scalex )
@@ -125,7 +127,7 @@ class LibMngClass(xbmcgui.Window):
 	cancelp.xsize = int( 10*self.scalex )
 	cancelp.ysize = int( 10*self.scaley )
 	self.cancelButton = xbmcgui.ControlButton( cancelp.xpos, cancelp.ypos,
-	     cancelp.xsize, cancelp.ysize, "Cancel" )
+	     cancelp.xsize, cancelp.ysize, getLS(13) )
         self.addControl(self.cancelButton)
 
         # Options buttion 
@@ -135,7 +137,7 @@ class LibMngClass(xbmcgui.Window):
 	optionp.xsize = int( 15*self.scalex )
 	optionp.ysize = int( 10*self.scaley )
 	self.optionButton = xbmcgui.ControlButton( optionp.xpos, optionp.ypos,
-	     optionp.xsize, optionp.ysize, "Options ..." )
+	     optionp.xsize, optionp.ysize, getLS(14)+"..." )
         self.addControl(self.optionButton)
 
         # Set widgets order navigation 
@@ -216,13 +218,12 @@ class LibMngClass(xbmcgui.Window):
         # Get path lists 
         paths = self.get_path_list( )
         # Get selected option 
-        option_idx = dialog.select( 'Choose location', paths )
+        option_idx = dialog.select( getLS(23), paths )
         if option_idx < 0:
             return 
 	# Check path availability  
 	if not os.path.exists( paths[option_idx] ):
-	  dialog.ok( "Source not available", "Select an available source", 
-	      "Tip: make sure that source is mounted." )
+	  dialog.ok( getLS(20), getLS(21), getLS(22) )
 	  return
         # Save option 
         widget.path = paths[option_idx]
@@ -236,33 +237,30 @@ class LibMngClass(xbmcgui.Window):
         # Check values 
         dialog = xbmcgui.Dialog()
         if self.src.path is None:
-            dialog.ok( "Source not set", "Select a source location" )
+            dialog.ok( getLS(30), getLS(31) )
             return
         if self.dst.path is None:
-            dialog.ok( "Destination not set", "Select a destination location" )
+            dialog.ok( getLS(32), getLS(33) )
             return
         if self.src.path == self.dst.path:
-            dialog.ok( "Nothing to do", "Source and destiantion are the same\
- path" )
+            dialog.ok( getLS(34), getLS(35) )
             return
         sel_items = []
         for i in range( self.src.wlist.size() ):
             if self.src.wlist.getListItem( i ).isSelected(): 
                 sel_items.append( i )
         if len( sel_items ) > 0:
-            if not dialog.yesno( "Moving movies", "%d movies(s) are going to\
- be moved" % len( sel_items ) , "Do you want to continue?" ):
+            if not dialog.yesno( getLS(36), "%d " % len( sel_items) + getLS(37)  , getLS(38) ):
                 return 
         else:
-            dialog.ok( "Movie not selected", "Select at least one movie to\
- move" )
+            dialog.ok( getLS(39), getLS(40) )
             return
         # Move Movies 
         progress = xbmcgui.DialogProgress() 
-        progress.create( "Moving movies" )
+        progress.create( getLS(36) )
         for i in sel_items:
             progress.update( sel_items.index( i ) * 100 / len( sel_items),
-                    "", "Current movie: %s" % self.src.mlist[i] )
+                    "", getLS(41)+" %s" % self.src.mlist[i] )
             self.move_movie( self.src.mlist[i], self.src.path,
                     self.dst.path )
             if progress.iscanceled():
@@ -434,7 +432,7 @@ class OptionClass( xbmcgui.Window ):
         basex = 0
         self.watchedRadio = xbmcgui.ControlRadioButton( basex + optionp.xpos, 
                 optionp.ypos, optionp.xsize, optionp.ysize, 
-                'Only show watched', font='font14')
+                getLS(50), font='font14')
         self.watchedRadio.setSelected( options["watched"] )
         self.addControl( self.watchedRadio )
 

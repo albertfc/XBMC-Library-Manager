@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="10">Seleccionar Fuente</string>
+  <string id="11">Seleccionar Destino</string>
+  <string id="12">OK</string>
+  <string id="13">Cancelar</string>
+  <string id="14">Opciones</string>
+  <string id="15">Lista vacia</string>
+  <string id="16">Vacio</string>
+
+  <string id="20">La fuente seleccionada no se encuentra disponible</string>
+  <string id="21">Seleccione una fuente disponible</string>
+  <string id="22">Consejo: asegurese que la fuente está montada</string>
+  <string id="23">Seleccione una ubicación</string>
+
+  <string id="30">Fuente no establecida</string>
+  <string id="31">Seleccione una ubicación para la fuente</string>
+  <string id="32">Destino no establecida</string>
+  <string id="33">Seleccione una ubicación para el destino</string>
+  <string id="34">Nada que hacer</string>
+  <string id="35">Fuente y destino son la misma ubicación</string>
+  <string id="36">Moviendo las películas</string>
+  <string id="37">película(s) serán reubicadas</string>
+  <string id="38">¿Está seguro de querer continuar?</string>
+  <string id="39">Ninguna películda seleccionada</string>
+  <string id="40">Seleccione al menos una película</string>
+  <string id="41">Película actual:</string>
+
+  <string id="50">Solo mostrar lo marcado como visto</string>
+
+</strings>

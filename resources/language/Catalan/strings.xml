@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="10">Seleccionar Font</string>
+  <string id="11">Seleccionar Destí</string>
+  <string id="12">D'acord</string>
+  <string id="13">Cancel·lar</string>
+  <string id="14">Opcions</string>
+  <string id="15">Llista buida</string>
+  <string id="16">Buit</string>
+
+  <string id="20">Ubicació no disponible</string>
+  <string id="21">Seleccioni una ubicació disponible</string>
+  <string id="22">Consell: Asseguris que la ubicació està muntada</string>
+  <string id="23">Seleccioni una ubicació</string>
+
+  <string id="30">Font no seleccionada</string>
+  <string id="31">Seleccioni una ubicació per a la font</string>
+  <string id="32">Destí no seleccionat</string>
+  <string id="33">Seleccioni una ubicació per al destí</string>
+  <string id="34">No hi ha res a fer</string>
+  <string id="35">La font i el destí són a la mateixa ubicació</string>
+  <string id="36">Movent pel·lícules</string>
+  <string id="37">pel·lícula/es será/seran mogudes</string>
+  <string id="38">Está segur de voler continuar?</string>
+  <string id="39">Cap pel·lícula seleccionada</string>
+  <string id="40">Seleccioni com a mínim una pel·lícula a moure</string>
+  <string id="41">Pel·lícula actual:</string>
+
+  <string id="50">Mostrar només aquells marcats com a vist</string>
+
+</strings>
