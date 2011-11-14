@@ -366,33 +366,49 @@ class LibMngClass(xbmcgui.Window):
 
         ## Do the move 
         for mfile in mfiles:
-            # Move movie file and related files (e.g. subtitles files)
+            # Get movie file and related files (e.g. subtitles files)
             src = str( mfile )
             logging.dbg( "srcfile: %s" % src )
             dst = mfile.replace( old_path, new_path ) 
             logging.dbg( "dstfile: %s" % dst )
-            root, ext = os.path.splitext( src )
+
+            # Get cache file names
+            thsrc = xbmc.getCacheThumbName( src )
+            logging.dbg( "srcthumb: %s" % thsrc )
+            thdst = xbmc.getCacheThumbName( dst )
+            logging.dbg( "dstthumb: %s" % thdst )
+ 
 	    # replace braces on filename for [[] and []] to be able to use glob
-            for fname in glob.glob( re.sub( r'(\[|])', r'[\1]', root ) + ".*" ):
-                logging.dbg( "move %s %s" % ( fname, fname.replace( old_path, 
-                    new_path ) ) )
+            root, ext = os.path.splitext( src )
+            srcfn = glob.glob( re.sub( r'(\[|])', r'[\1]', root ) + ".*" ) 
+            dstfn = map( lambda x:x.replace( old_path, new_path ), srcfn )
+
+            # Get thumbnail fname
+            srcfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/" + thsrc[0] + "/" + thsrc )
+            dstfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/" + thdst[0] + "/" + thdst )
+
+            # Get auto-thumbnail fname
+            srcfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/" + thsrc[0] + "/auto-" + thsrc )
+            dstfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/" + thdst[0] + "/auto-" + thdst )
+
+            # get Fanart fname
+            srcfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/Fanart/" + thsrc )
+            dstfn.append( xbmc.translatePath( 'special://thumbnails/Video' ) 
+                    + "/Fanart/" + thdst )
+
+            # Move files
+            for i in range( len( srcfn ) ):
                 try:
-                    shutil.move( fname, fname.replace( old_path, new_path ) )
+                    shutil.move( srcfn[i], dstfn[i] )
+                    logging.dbg( "move %s %s" % ( srcfn[i], dstfn[i] ) )
                 except IOError:
+                    logging.dbg( "Error moving %s %s" % ( srcfn[i], dstfn[i] ) )
                     pass
-                    
-            # Move thumbnail 
-            thumb = xbmc.getCacheThumbName( src )
-            tnsrc = xbmc.translatePath( 'special://thumbnails/Video' ) + "/"\
-                    + thumb[0] + "/" + thumb
-            thumb = xbmc.getCacheThumbName( dst )
-            tndst = xbmc.translatePath( 'special://thumbnails/Video' ) + "/"\
-                    + thumb[0] + "/" + thumb
-            logging.dbg( "move %s %s" % ( tnsrc, tndst ) )
-            try:
-                shutil.move( tnsrc, tndst )
-            except IOError:
-                pass
 
         # Commit Changes 
         self.db_conn.commit()
