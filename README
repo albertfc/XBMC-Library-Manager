@@ -3,3 +3,19 @@ library. Currently it has the following features:
 * Move movie files across diferent paths preserving database integrity as well
   the related thumbnails images.
 
+Limitations:
+* Only works with filesystem sources. Thats it, SMB, UPnP and other source types
+  that XBMC can handle, currently, are NOT supported by this addon.
+
+INSTALL
+=======
+1. Download a zipped package from here: 
+    https://github.com/albertfc/XBMC-Library-Manager/zipball/master
+
+2. Go to: System > Add-ons > Install from zip file and select previously
+   downloaded file.
+
+EXECUTE
+=======
+1. Go to: Programs > Library Manager
+  

@@ -11,7 +11,7 @@ __scriptname__ = "Library Manager"
 __author__     = "Albert Farres"
 __license__    = "GPLv3"
 __version__    = "0.1"
-__url__        = "n/a"
+__url__        = "https://github.com/albertfc/XBMC-Library-Manager"
 __email__      = "albertfc@gmail.com"
 __status__     = "Prototype"
 __settings__   = xbmcaddon.Addon(id="script.LibraryManager")
@@ -250,7 +250,8 @@ class LibMngClass(xbmcgui.Window):
             if self.src.wlist.getListItem( i ).isSelected(): 
                 sel_items.append( i )
         if len( sel_items ) > 0:
-            if not dialog.yesno( getLS(36), "%d " % len( sel_items) + getLS(37)  , getLS(38) ):
+            if not dialog.yesno( getLS(36), "%d " % len( sel_items ) 
+                    + getLS(37)  , getLS(38) ):
                 return 
         else:
             dialog.ok( getLS(39), getLS(40) )
@@ -259,7 +260,7 @@ class LibMngClass(xbmcgui.Window):
         progress = xbmcgui.DialogProgress() 
         progress.create( getLS(36) )
         for i in sel_items:
-            progress.update( sel_items.index( i ) * 100 / len( sel_items),
+            progress.update( sel_items.index( i ) * 100 / len( sel_items ),
                     "", getLS(41)+" %s" % self.src.mlist[i] )
             self.move_movie( self.src.mlist[i], self.src.path,
                     self.dst.path )
@@ -360,10 +361,10 @@ class LibMngClass(xbmcgui.Window):
             # Launch query 
             c.execute( query, value )
             # Get fanart cache filename and move it
-            srcfn = ( xbmc.translatePath( 'special://thumbnails/Video' ) 
-                    + "/Fanart/" + xbmc.getCacheThumbName( mfile ) )
-            dstfn = ( xbmc.translatePath( 'special://thumbnails/Video' ) 
-                    + "/Fanart/" + xbmc.getCacheThumbName( strfn ) )
+            srcfn = xbmc.translatePath( 'special://thumbnails/Video' ) +\
+                    "/Fanart/" + xbmc.getCacheThumbName( mfile ) 
+            dstfn = xbmc.translatePath( 'special://thumbnails/Video' ) +\
+                    "/Fanart/" + xbmc.getCacheThumbName( strfn ) 
             try:
                 shutil.move( srcfn, dstfn )
                 logging.dbg( "move %s %s" % ( srcfn, dstfn ) )
