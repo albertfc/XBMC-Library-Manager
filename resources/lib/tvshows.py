@@ -191,8 +191,8 @@ class TVshowWindow(xbmcgui.Window):
 	if control == self.optionButton:
             self.optionsWindow.doModal()
             self.options = self.optionsWindow.getOptions()
-            if self.src.tslist:
-	        self.update_tvshow_list( self.src )
+            if self.src.eplist:
+	        self.update_episode_list( self.src )
 
     def on_cancel_button( self ):
         # Close DB 
@@ -317,9 +317,12 @@ class TVshowWindow(xbmcgui.Window):
         # Create empty list 
         res = []
         # Create query 
-        query = "SELECT ep.c12, ep.c13, ep.c00, ep.idFile \
-                 FROM   tvshowlinkepisode tsle, episode ep \
-                 WHERE  tsle.idEpisode = ep.idEpisode AND tsle.idShow = ?"
+        query = "SELECT e.c12, e.c13, e.c00, e.idFile \
+                 FROM   tvshowlinkepisode tsle, episode e, files f \
+                 WHERE  tsle.idEpisode = e.idEpisode AND e.idFile = f.idFile \
+                        AND tsle.idShow = ?"
+        if self.options["watched"]:
+            query += "  AND f.playcount > 0 "
         # Create values 
         value = show.meta, 
         # Create a cursor
