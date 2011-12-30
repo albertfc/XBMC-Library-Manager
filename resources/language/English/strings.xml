@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
+
+  <string id="0">Media types to Manage</string>
+  <string id="1">Movies</string>
+  <string id="2">TV Shows</string>
+  <string id="3">Music</string>
+  <string id="4">Option not available</string>
+  <string id="5">Library Manager for this media type is not implemented</string>
+
   <string id="10">Select Source</string>
   <string id="11">Select Destination</string>
   <string id="12">OK</string>
@@ -20,12 +28,17 @@
   <string id="34">Nothing to do</string>
   <string id="35">Source and destiantion are the same path</string>
   <string id="36">Moving movies</string>
-  <string id="37">movies(s) are going to be moved</string>
+  <string id="37">movie(s) are going to be moved</string>
   <string id="38">Do you want to continue?</string>
   <string id="39">Movie not selected</string>
   <string id="40">Select at least one movie to move</string>
   <string id="41">Current movie:</string>
 
   <string id="50">Only show watched</string>
+
+  <string id="60">Moving TV shows</string>
+  <string id="61">episode(s) are going to be moved</string>
+  <string id="62">Episode not selected</string>
+  <string id="63">Select at least one episode to move</string>
 
 </strings>

@@ -1,3 +1,4 @@
-* Less crashing. Currently, sometimes it crashes on exit but I don't the reason
+* Less crashing. Currently, sometimes it crashes on exit but I don't know the reason
   why.
 * Improve GUI. I'm not a good graph dessigner. I've done the best I could ;)
+* Add support for manage music library
