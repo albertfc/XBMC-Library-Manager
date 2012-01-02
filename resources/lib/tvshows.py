@@ -244,7 +244,7 @@ class TVshowWindow(xbmcgui.Window):
         progress.create( getLS(60) )
         for i in sel_items:
             progress.update( sel_items.index( i ) * 100 / len( sel_items ),
-                    "", getLS(41)+" %s" % self.src.eplist[i] )
+                    "", getLS(41)+" %s" % self.src.eplist[i].encode('utf-8') )
             self.move_episode( self.src.eplist[i], self.src.path,
                     self.dst.path )
             if progress.iscanceled():
@@ -331,7 +331,8 @@ class TVshowWindow(xbmcgui.Window):
         c.execute( query, value )
         # Build result 
         for s, e, name, eid in c:
-            res.append( metaStr( "%02dx%02d - %s" % ( int(s), int(e), name), eid ) )
+            res.append( metaStr( "%02dx%02d - %s" % ( int(s), int(e), name ), 
+                eid ) )
         # Close cursor 
         c.close()
         # Return result 
@@ -358,8 +359,8 @@ class TVshowWindow(xbmcgui.Window):
         # Build result 
         res = c.fetchone()
 	eid   = res[0]
-	efile = res[1].encode('utf8')
-	epath = res[2].encode('utf8')
+	efile = unicode( res[1] )
+	epath = unicode( res[2] )
 	eidpath = res[3]
         eidshow = res[4]
         season = int( res[5] )
@@ -417,7 +418,7 @@ class TVshowWindow(xbmcgui.Window):
         c.execute( query )
         # check result
         for new_tspath, new_idshow in c:
-            if str( new_tspath ) in new_epath:
+            if unicode( new_tspath ) in new_epath:
                 break
         else:
             # Create a new TV show on DB
@@ -450,7 +451,7 @@ class TVshowWindow(xbmcgui.Window):
 
         ## Copy season fanart cache
         # http://forum.xbmc.org/showthread.php?p=324453#post324453
-        dst = "season" + str( new_tspath ) + xbmc.getLocalizedString( 20358 )
+        dst = "season" + unicode( new_tspath ) + xbmc.getLocalizedString( 20358 )
         dst = dst % season
         src = dst.replace( new_path, old_path ) 
         logging.dbg( "src season fanart: %s" % src )
@@ -535,7 +536,7 @@ class TVshowWindow(xbmcgui.Window):
         # Launch query 
         c.execute( query, value )
         # Build result 
-        old_tspath = str( c.fetchone()[0] )
+        old_tspath = unicode( c.fetchone()[0] )
         new_tspath = old_tspath.replace( old_path, new_path )
 
         ## Try to Create new path on system

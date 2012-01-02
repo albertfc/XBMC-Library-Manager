@@ -230,7 +230,7 @@ class MovieWindow(xbmcgui.Window):
         progress.create( getLS(36) )
         for i in sel_items:
             progress.update( sel_items.index( i ) * 100 / len( sel_items ),
-                    "", getLS(41)+" %s" % self.src.mlist[i] )
+                    "", getLS(41)+" %s" % self.src.mlist[i].encode('utf-8') )
             self.move_movie( self.src.mlist[i], self.src.path,
                     self.dst.path )
             if progress.iscanceled():
@@ -316,8 +316,8 @@ class MovieWindow(xbmcgui.Window):
         # Launch query 
 	c.execute( query, value )
         # Build result 
-	mfile = c.fetchone()[0].encode('utf8')
-	#mfile = str( c.fetchone()[0] )
+	mfile = unicode( c.fetchone()[0] )
+	#mfile = unicode( c.fetchone()[0] )
 
         ## Deal with stacked files 
         if mfile.startswith( "stack://" ):
@@ -349,7 +349,7 @@ class MovieWindow(xbmcgui.Window):
         ## Do the move 
         for mfile in mfiles:
             # Get movie file and related files (e.g. subtitles files)
-            src = str( mfile )
+            src = unicode( mfile )
             logging.dbg( "srcfile: %s" % src )
             dst = mfile.replace( old_path, new_path ) 
             logging.dbg( "dstfile: %s" % dst )

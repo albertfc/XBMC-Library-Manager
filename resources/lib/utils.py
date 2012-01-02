@@ -19,11 +19,10 @@ class place( object ):
     xsize = None 
     ysize = None
 
-class metaStr( str ):
+class metaStr( unicode ):
 
     def __new__(cls,value,meta):
-        obj = str.__new__(cls,value.encode('utf8'))
-	#obj = str.__new__(cls,value)
+	obj = unicode.__new__(cls,value)
         obj.meta = meta
         return obj
 

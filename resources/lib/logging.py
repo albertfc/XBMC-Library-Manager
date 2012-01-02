@@ -10,10 +10,10 @@ class logging:
 
     @staticmethod
     def dbg( msg ):
-        xbmc.output( "LibraryManager: "+msg, xbmc.LOGDEBUG )
+        xbmc.output( "LibraryManager: "+msg.encode('utf-8'), xbmc.LOGDEBUG )
 
     @staticmethod
     def err( msg ):
-        xbmc.output( "LibraryManager: "+msg, xbmc.LOGERROR )
+        xbmc.output( "LibraryManager: "+msg.encode('utf-8'), xbmc.LOGERROR )
 
 
